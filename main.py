@@ -5,8 +5,15 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
 
+VERSION = "1.0.0"
+
+
+def version():
+    print(f"Asteroid game ver {VERSION}")
+
 
 def main():
+    version()
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
