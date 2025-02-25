@@ -6,3 +6,4 @@ Boot.dev course - [Build Asteroids using Python and Pygame](https://www.boot.dev
 Simple python game based on classic Asteroids using pygame
 
 ## Usage
+python3 main.py
