@@ -44,6 +44,8 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_SPACE] and self.cool_down_time <= 0:
             self.shoot()
+            
+        self.loop_around()
 
     def shoot(self):
         self.cool_down_time = PLAYER_SHOOT_COOLDOWN

@@ -5,7 +5,7 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 
 def version():
@@ -15,7 +15,9 @@ def version():
 def main():
     version()
     pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode(
+        (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+
     clock = pygame.time.Clock()
     dt = 0
 
@@ -31,7 +33,6 @@ def main():
 
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroidfield = AsteroidField()
-
     while True:
         keys = pygame.key.get_pressed()
 
@@ -41,6 +42,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+
         screen.fill((0, 0, 0))
 
         for obj in updatable:

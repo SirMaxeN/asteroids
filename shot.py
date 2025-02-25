@@ -13,3 +13,5 @@ class Shot(CircleShape):
 
     def update(self, dt: float):
         self.position += (self.velocity * dt)
+        if self.out_of_bounds():
+            self.kill()
