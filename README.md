@@ -10,6 +10,12 @@ python3 main.py
 
 
 ## Changelog
+### [1.0.3] - 2025-02-25
+* state manager
+* simple menu screen
+* game screen
+* repeat gameplay
+
 ### [1.0.2] - 2025-02-25
 * player smooth acceleration and braking
 

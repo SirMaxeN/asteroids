@@ -1,11 +1,11 @@
 import pygame
-from constants import *
-from player import Player
-from asteroid import Asteroid
-from asteroidfield import AsteroidField
-from shot import Shot
+import pygame.freetype
+from src.constants import *
+from src.resources import Resources
+from src.statemanager import StateManager
 
-VERSION = "1.0.2"
+
+VERSION = "1.0.3"
 
 
 def version():
@@ -15,24 +15,17 @@ def version():
 def main():
     version()
     pygame.init()
+
     screen = pygame.display.set_mode(
         (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 
     clock = pygame.time.Clock()
     dt = 0
 
-    updatable = pygame.sprite.Group()
-    drawable = pygame.sprite.Group()
-    asteroids = pygame.sprite.Group()
-    shots = pygame.sprite.Group()
+    state_manager = StateManager()
+    resources = Resources()
+    current_state = state_manager.get_state()
 
-    Player.containers = (updatable, drawable)
-    Asteroid.containers = (asteroids, updatable, drawable)
-    AsteroidField.containers = (updatable)
-    Shot.containers = (shots, updatable, drawable)
-
-    player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-    asteroidfield = AsteroidField()
     while True:
         keys = pygame.key.get_pressed()
 
@@ -45,24 +38,16 @@ def main():
 
         screen.fill((0, 0, 0))
 
-        for obj in updatable:
-            obj.update(dt)
-
-        for obj in asteroids:
-            if obj.collision(player):
-                print("Game over!")
-                return
-
-        for ast in asteroids:
-            for bullet in shots:
-                if ast.collision(bullet):
-                    ast.split()
-                    bullet.kill()
-
-        for obj in drawable:
-            obj.draw(screen)
+        if current_state:
+            if current_state.is_started() == False:
+                current_state.on_start()
+            else:
+                if current_state.loop(dt, screen) == False:
+                    current_state.on_end()
+                    current_state = state_manager.change_state()
 
         pygame.display.flip()
+
         dt = clock.tick(60)/1000
 
 

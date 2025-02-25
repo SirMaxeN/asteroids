@@ -1,6 +1,5 @@
 import pygame
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
-from typing import Type
+from ..constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
 # Base class for game objects
 
