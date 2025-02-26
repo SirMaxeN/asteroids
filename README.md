@@ -10,6 +10,13 @@ python3 main.py
 
 
 ## Changelog
+### [1.0.5] - 2025-02-26
+* unification of texts between screens
+* new ship polygon shape
+* new asteroids polygon shape
+* background asteroids
+* engine effect
+
 ### [1.0.4] - 2025-02-26
 * better menu screen
 * game score

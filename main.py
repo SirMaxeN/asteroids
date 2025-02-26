@@ -6,7 +6,7 @@ from src.statemanager import StateManager
 from src.stateenum import StateEnum
 
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 
 
 def version():
@@ -18,7 +18,7 @@ def main():
     pygame.init()
 
     screen = pygame.display.set_mode(
-        (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SHOWN)
+        (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
 
     clock = pygame.time.Clock()
     dt = 0

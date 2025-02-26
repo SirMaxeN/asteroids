@@ -4,7 +4,10 @@ from ..constants import *
 from ..game.player import Player
 from ..game.asteroid import Asteroid
 from ..game.asteroidfield import AsteroidField
+from ..game.asteroidfake import AsteroidFake
+from ..game.asteroidfieldfake import AsteroidFieldFake
 from ..game.shot import Shot
+from ..game.particle import Particle
 from ..stateenum import StateEnum
 from ..text import Text
 from ..resources import Resources
@@ -15,17 +18,30 @@ class Game(State):
         super().on_start()
 
         self.updatable = pygame.sprite.Group()
-        self.drawable = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
+        self.asteroids_fake = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
+        self.drawable_bottom = pygame.sprite.Group()
+        self.drawable_middle = pygame.sprite.Group()
+        self.drawable_top = pygame.sprite.Group()
 
-        Player.containers = (self.updatable, self.drawable)
-        Asteroid.containers = (self.asteroids, self.updatable, self.drawable)
         AsteroidField.containers = (self.updatable)
-        Shot.containers = (self.shots, self.updatable, self.drawable)
+
+        AsteroidFake.containers = (
+            self.asteroids_fake, self.updatable, self.drawable_bottom)
+
+        Asteroid.containers = (
+            self.asteroids, self.updatable, self.drawable_middle)
+        Shot.containers = (self.shots, self.updatable, self.drawable_middle)
+        Particle.containers = (self.updatable, self.drawable_middle)
+
+        Player.containers = (self.updatable, self.drawable_top)
 
         self.player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         self.asteroidfield = AsteroidField()
+        AsteroidFieldFake((10, 10, 10), 0.008)
+        AsteroidFieldFake((20, 20, 20), 0.01)
+        AsteroidFieldFake((30, 30, 30), 0.015)
 
         Resources.SCORE = 0
         self.score_timer = 0
@@ -37,15 +53,14 @@ class Game(State):
                  SCREEN_WIDTH/2 - 600, SCREEN_HEIGHT / 2 - 340, (150, 150, 150), Resources.GAME_FONT_S),
             Text("",
                  SCREEN_WIDTH/2 - 600, SCREEN_HEIGHT / 2 - 320, (150, 150, 150), Resources.GAME_FONT_S),
-            Text(f"ver {Resources.VERSION}",
-                 SCREEN_WIDTH/2 - 570, SCREEN_HEIGHT / 2 + 330, (75, 75, 75), Resources.GAME_FONT_S),
-            Text("base game made during boot.dev python course",
-                 SCREEN_WIDTH/2 + 383, SCREEN_HEIGHT / 2 + 290, (75, 75, 75), Resources.GAME_FONT_S),
-            Text("rest made by Jakub \"SirMaxeN\" Komar",
-                 SCREEN_WIDTH/2 + 433, SCREEN_HEIGHT / 2 + 310, (75, 75, 75), Resources.GAME_FONT_S),
-            Text("https://github.com/SirMaxeN/asteroids",
-                 SCREEN_WIDTH/2 + 420, SCREEN_HEIGHT / 2 + 330, (75, 75, 75), Resources.GAME_FONT_S),
+
         ]
+
+        for i in Resources.credits(75):
+            self.texts.append(i)
+
+        for i in Resources.version(75):
+            self.texts.append(i)
 
         self.set_lives_text()
 
@@ -98,10 +113,16 @@ class Game(State):
                     bullet.kill()
                     self.update_score()
 
+        for obj in self.drawable_bottom:
+            obj.draw(screen)
+
         for text in self.texts:
             screen.blit(text.get_obj(), text.get_position())
 
-        for obj in self.drawable:
+        for obj in self.drawable_middle:
+            obj.draw(screen)
+
+        for obj in self.drawable_top:
             obj.draw(screen)
 
         return StateEnum.CONTINUE
@@ -117,18 +138,26 @@ class Game(State):
             obj.kill()
 
         self.updatable.empty()
-        self.drawable.empty()
+        self.drawable_bottom.empty()
+        self.drawable_middle.empty()
+        self.drawable_top.empty()
         self.asteroids.empty()
         self.shots.empty()
+        self.asteroids_fake.empty()
 
         self.updatable = None
-        self.drawable = None
+        self.drawable_bottom = None
+        self.drawable_middle = None
+        self.drawable_top = None
         self.asteroids = None
         self.shots = None
+        self.asteroids_fake = None
 
-        Player.containers = None
-        Asteroid.containers = None
         AsteroidField.containers = None
+        AsteroidFake.containers = None
+        Asteroid.containers = None
         Shot.containers = None
+        Particle.containers = None
+        Player.containers = None
 
         super().on_end()

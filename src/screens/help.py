@@ -23,7 +23,7 @@ class Help(State):
                  SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT/2-30, (255, 255, 255), Resources.GAME_FONT_S),
             Text("D or ARROW RIGHT  -  rotate right",
                  SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT/2, (255, 255, 255), Resources.GAME_FONT_S),
-            Text("SPACE  -  shoot",
+            Text("M or SPACE  -  shoot",
                  SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT/2 + 30, (255, 255, 255), Resources.GAME_FONT_S),
             Text("ESC  -  back to menu",
                  SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT/2 + 60, (255, 255, 255), Resources.GAME_FONT_S),
@@ -43,15 +43,13 @@ class Help(State):
                  SCREEN_WIDTH/2 + 300, SCREEN_HEIGHT / 2 + 60, (255, 255, 255), Resources.GAME_FONT_S),
             Text("press any key to go back to menu",
                  SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, (255, 255, 255), Resources.GAME_FONT_L),
-            Text(f"ver {Resources.VERSION}",
-                 SCREEN_WIDTH/2 - 570, SCREEN_HEIGHT / 2 + 330, (150, 150, 150), Resources.GAME_FONT_S),
-            Text("base game made during boot.dev python course",
-                 SCREEN_WIDTH/2 + 383, SCREEN_HEIGHT / 2 + 290, (150, 150, 150), Resources.GAME_FONT_S),
-            Text("rest made by Jakub \"SirMaxeN\" Komar",
-                 SCREEN_WIDTH/2 + 433, SCREEN_HEIGHT / 2 + 310, (150, 150, 150), Resources.GAME_FONT_S),
-            Text("https://github.com/SirMaxeN/asteroids",
-                 SCREEN_WIDTH/2 + 420, SCREEN_HEIGHT / 2 + 330, (150, 150, 150), Resources.GAME_FONT_S),
         ]
+
+        for i in Resources.credits(150):
+            self.texts.append(i)
+
+        for i in Resources.version(150):
+            self.texts.append(i)
 
     def loop(self, dt: float, screen: pygame.display, events) -> StateEnum:
         keys = pygame.key.get_pressed()
