@@ -49,6 +49,8 @@ class Player(CircleShape):
             self.shoot()
 
         if is_moving_direction != 0:
+            if is_moving_direction != self.last_moving_direction:
+                self.velocity.y = self.velocity.y*-1
             self.velocity.y += PLAYER_ACCELERATION
             if self.velocity.y > 1:
                 self.velocity.y = 1

@@ -3,9 +3,10 @@ import pygame.freetype
 from src.constants import *
 from src.resources import Resources
 from src.statemanager import StateManager
+from src.stateenum import StateEnum
 
 
-VERSION = "1.0.3"
+VERSION = "1.0.4"
 
 
 def version():
@@ -17,22 +18,20 @@ def main():
     pygame.init()
 
     screen = pygame.display.set_mode(
-        (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
+        (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SHOWN)
 
     clock = pygame.time.Clock()
     dt = 0
 
     state_manager = StateManager()
-    resources = Resources()
+    resources = Resources(VERSION)
     current_state = state_manager.get_state()
 
     while True:
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_ESCAPE]:
-            return
-
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 return
 
@@ -42,9 +41,12 @@ def main():
             if current_state.is_started() == False:
                 current_state.on_start()
             else:
-                if current_state.loop(dt, screen) == False:
+                state = current_state.loop(dt, screen, events)
+                if state != StateEnum.CONTINUE:
                     current_state.on_end()
-                    current_state = state_manager.change_state()
+                    if state == StateEnum.EXIT:
+                        return
+                    current_state = state_manager.change_state(state)
 
         pygame.display.flip()
 

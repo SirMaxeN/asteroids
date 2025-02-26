@@ -10,6 +10,15 @@ python3 main.py
 
 
 ## Changelog
+### [1.0.4] - 2025-02-26
+* better menu screen
+* game score
+* game lives
+* updated state manager
+* better player velocity
+* score screen
+* help screen
+
 ### [1.0.3] - 2025-02-25
 * state manager
 * simple menu screen

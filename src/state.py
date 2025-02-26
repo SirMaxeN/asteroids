@@ -1,4 +1,5 @@
 import pygame
+from .stateenum import StateEnum
 
 
 class State:
@@ -11,7 +12,7 @@ class State:
     def on_start(self):
         self.__is_started = True
 
-    def loop(self, dt: float, screen: pygame.display) -> bool:
+    def loop(self, dt: float, screen: pygame.display, events) -> StateEnum:
         # sub-classes must override
         pass
 
