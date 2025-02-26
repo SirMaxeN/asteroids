@@ -10,6 +10,15 @@ python3 main.py
 
 
 ## Changelog
+### [1.0.6] - 2025-02-26
+* music
+* sounds
+* sounds managment
+* asteroids explosion animation
+* ship explosion animation
+* menu animation
+
+
 ### [1.0.5] - 2025-02-26
 * unification of texts between screens
 * new ship polygon shape

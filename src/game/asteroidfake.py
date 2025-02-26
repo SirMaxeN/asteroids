@@ -1,8 +1,5 @@
 import pygame
-import random
 from .asteroid import Asteroid
-from ..constants import ASTEROID_MIN_RADIUS, ASTEROID_SPLIT_VELOCITY_MULTIPLIER, SCORE_PER_ASTEROID
-from ..resources import Resources
 
 
 class AsteroidFake(Asteroid):
@@ -14,4 +11,5 @@ class AsteroidFake(Asteroid):
 
     def draw(self, screen: pygame.display):
         # pygame.draw.circle(screen, (255, 255, 255), self.position, self.radius, 2)
+        pygame.draw.polygon(screen, (0, 0, 0), self.custom_polygon())
         pygame.draw.polygon(screen, self.color, self.custom_polygon(), 3)

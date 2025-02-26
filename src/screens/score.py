@@ -1,9 +1,12 @@
 import pygame
-from ..text import Text
-from ..state import State
-from ..constants import *
-from ..stateenum import StateEnum
-from ..resources import Resources
+from ..utils.text import Text
+from ..utils.state import State
+from ..utils.constants import *
+from ..utils.stateenum import StateEnum
+from ..utils.resources import Resources
+from ..utils.animation import Animation
+from ..utils.rectparticle import RectParticle
+from ..utils.audio import Audio
 
 
 class Score(State):
@@ -12,11 +15,11 @@ class Score(State):
 
         self.texts = [
             Text("YOUR SCORE",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT/2, (255, 255, 255), Resources.GAME_FONT_XL),
+                 SCREEN_WIDTH/2, SCREEN_HEIGHT/2, (255, 255, 255), Resources.FONT_XL),
             Text(f"{Resources.SCORE}",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT/2+50, (255, 255, 255), Resources.GAME_FONT_XL),
+                 SCREEN_WIDTH/2, SCREEN_HEIGHT/2+50, (255, 255, 255), Resources.FONT_XL),
             Text("press ESC or ENTER key to go back to menu",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, (255, 255, 255), Resources.GAME_FONT_L),
+                 SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, (255, 255, 255), Resources.FONT_L),
         ]
 
         for i in Resources.credits(150):
@@ -28,13 +31,30 @@ class Score(State):
         for i in Resources.title(100):
             self.texts.append(i)
 
+        self.updatable = pygame.sprite.Group()
+        self.drawable_bottom = pygame.sprite.Group()
+        self.drawable_mid = pygame.sprite.Group()
+
+        Animation.containers = (self.updatable, self.drawable_mid)
+        RectParticle.containers = (self.updatable, self.drawable_bottom)
+        Animation(SCREEN_WIDTH * 0.4, SCREEN_HEIGHT + 80, (60, 60, 60))
+
     def loop(self, dt: float, screen: pygame.display, events) -> StateEnum:
         keys = pygame.key.get_pressed()
 
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if keys[pygame.K_ESCAPE] or keys[pygame.K_RETURN]:
+                    Audio.play_enter()
                     return StateEnum.MENU
+
+        for obj in self.updatable:
+            obj.update(dt)
+
+        for obj in self.drawable_bottom:
+            obj.draw(screen)
+        for obj in self.drawable_mid:
+            obj.draw(screen)
 
         for text in self.texts:
             screen.blit(text.get_obj(), text.get_position())
@@ -46,5 +66,16 @@ class Score(State):
             self.texts.pop().kill()
 
         self.texts = []
+
+        self.drawable_bottom.empty()
+        self.drawable_mid.empty()
+        self.updatable.empty()
+
+        self.updatable = None
+        self.drawable_bottom = None
+        self.drawable_mid = None
+
+        Animation.containers = None
+        RectParticle.containers = None
 
         super().on_end()

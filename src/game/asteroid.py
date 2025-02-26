@@ -1,8 +1,10 @@
 import pygame
 import random
-from .circleshape import CircleShape
-from ..constants import ASTEROID_MIN_RADIUS, ASTEROID_SPLIT_VELOCITY_MULTIPLIER, SCORE_PER_ASTEROID
-from ..resources import Resources
+from ..utils.circleshape import CircleShape
+from ..utils.constants import ASTEROID_MIN_RADIUS, ASTEROID_SPLIT_VELOCITY_MULTIPLIER, SCORE_PER_ASTEROID, ASTEROID_TURN_SPEED
+from ..utils.resources import Resources
+from ..utils.audio import Audio
+from ..utils.particleanimation import ParticleAnimation
 
 
 class Asteroid(CircleShape):
@@ -12,24 +14,32 @@ class Asteroid(CircleShape):
         self.shape = self.get_shape()
         self.rotation = random.randint(0, 360)
         self.scale = 0.035
+        self.rotation_direction = random.randint(-3, 3)/3
+
+    def rotate(self, dt: float):
+        self.rotation += ASTEROID_TURN_SPEED * dt
 
     def custom_polygon(self):
         output = []
-        for i in range(0, len(self.shape)-1, 2):
+        for i in range(0, len(self.shape), 2):
             output.append(
                 self.position - pygame.Vector2(self.shape[i], self.shape[i+1]).rotate(self.rotation) * self.radius * self.scale)
         return output
 
     def draw(self, screen: pygame.display):
         # pygame.draw.circle(screen, (255, 255, 255),                           self.position, self.radius, 2)
+        pygame.draw.polygon(screen, (0, 0, 0), self.custom_polygon())
         pygame.draw.polygon(screen, (255, 255, 255), self.custom_polygon(), 2)
 
     def update(self, dt: float):
         self.position += (self.velocity * dt)
+        self.rotate(dt * self.rotation_direction)
 
         self.loop_around()
 
     def split(self):
+        Audio.play_explosion()
+        self.split_animation()
         self.kill()
 
         Resources.SCORE += SCORE_PER_ASTEROID * self.type
@@ -67,3 +77,10 @@ class Asteroid(CircleShape):
         ]
         index = random.randint(0, len(points)-1)
         return points[index]
+
+    def split_animation(self):
+        for i in range(1, 200):
+            ParticleAnimation(self.position.x, self.position.y, 2, (255, 255, 255), 0, random.uniform(0.8,1.5),
+                              pygame.Vector2(0, 1).rotate(
+                self.rotation + i * 5.4) * (random.uniform(10, 80))
+            )

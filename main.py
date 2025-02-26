@@ -1,12 +1,13 @@
 import pygame
 import pygame.freetype
-from src.constants import *
-from src.resources import Resources
-from src.statemanager import StateManager
-from src.stateenum import StateEnum
+from src.utils.constants import *
+from src.utils.audio import Audio
+from src.utils.resources import Resources
+from src.utils.statemanager import StateManager
+from src.utils.stateenum import StateEnum
 
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 
 
 def version():
@@ -16,6 +17,9 @@ def version():
 def main():
     version()
     pygame.init()
+    pygame.mixer.init()
+    resources = Resources(VERSION)
+    audio = Audio()
 
     screen = pygame.display.set_mode(
         (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.NOFRAME)
@@ -24,7 +28,6 @@ def main():
     dt = 0
 
     state_manager = StateManager()
-    resources = Resources(VERSION)
     current_state = state_manager.get_state()
 
     while True:
