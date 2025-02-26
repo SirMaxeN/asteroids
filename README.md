@@ -10,10 +10,15 @@ Simple python game based on classic Asteroids using pygame
 
 ## Usage
 python3 main.py
-
+<br>or<br>
+go to build/asteroids.exe <br>
+this is windows executable installer which will unzip .exe and assets to use on windows
 
 
 ## Changelog
+### [1.1.0] - 2025-02-26
+* build add windows .exe installer
+
 ### [1.0.8] - 2025-02-26
 * readme video
 * change booster chances
