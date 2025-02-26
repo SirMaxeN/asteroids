@@ -7,7 +7,7 @@ from src.utils.statemanager import StateManager
 from src.utils.stateenum import StateEnum
 
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 
 def version():

@@ -13,6 +13,8 @@ from ..utils.text import Text
 from ..utils.resources import Resources
 from ..utils.audio import Audio
 from ..utils.particleanimation import ParticleAnimation
+from ..game.boostbomb import BoostBomb
+from ..game.boostshot import BoostShot
 
 
 class Game(State):
@@ -26,6 +28,7 @@ class Game(State):
         self.drawable_bottom = pygame.sprite.Group()
         self.drawable_middle = pygame.sprite.Group()
         self.drawable_top = pygame.sprite.Group()
+        self.boost = pygame.sprite.Group()
 
         AsteroidField.containers = (self.updatable)
 
@@ -38,6 +41,8 @@ class Game(State):
         ParticleEngine.containers = (self.updatable, self.drawable_middle)
         ParticleAnimation.containers = (self.updatable, self.drawable_top)
 
+        BoostShot.containers = (self.boost, self.updatable, self.drawable_top)
+        BoostBomb.containers = (self.boost, self.updatable, self.drawable_top)
         Player.containers = (self.updatable, self.drawable_top)
 
         self.player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
@@ -56,7 +61,6 @@ class Game(State):
                  SCREEN_WIDTH/2 - 600, SCREEN_HEIGHT / 2 - 340, (150, 150, 150), Resources.FONT_S),
             Text("",
                  SCREEN_WIDTH/2 - 600, SCREEN_HEIGHT / 2 - 320, (150, 150, 150), Resources.FONT_S),
-
         ]
 
         for i in Resources.credits(75):
@@ -71,7 +75,7 @@ class Game(State):
 
     def set_lives_text(self):
         text = ""
-        if self.lives>0:
+        if self.lives > 0:
             for i in range(0, self.lives-1):
                 text += "X "
             text += "X"
@@ -119,7 +123,7 @@ class Game(State):
             if self.player != None and obj.collision(self.player):
                 self.player.dead()
                 self.player = None
-                obj.split()
+                obj.split(False)
                 self.lives -= 1
                 self.set_lives_text()
                 self.restart_timer = 0
@@ -127,15 +131,26 @@ class Game(State):
                 if self.lives > 0:
                     Audio.play_dead()
                     Audio.play_dead_symth()
-
                 else:
                     Audio.play_dead()
                     Audio.play_end()
 
+        for obj in self.boost:
+            if self.player != None and obj.collision(self.player):
+                if obj.type == "bomb":
+                    for ast in self.asteroids:
+                        ast.split(False)
+                elif obj.type == "shot":
+                    self.player.start_shoot_boost()
+                obj.collect()
+
         for ast in self.asteroids:
             for bullet in self.shots:
                 if ast.collision(bullet):
-                    ast.split()
+                    is_boost = False
+                    if len(self.boost) < 3:
+                        is_boost = True
+                    ast.split(is_boost)
                     bullet.kill()
                     self.update_score()
 
@@ -170,6 +185,7 @@ class Game(State):
         self.asteroids.empty()
         self.shots.empty()
         self.asteroids_fake.empty()
+        self.boost.empty()
 
         self.updatable = None
         self.drawable_bottom = None
@@ -178,6 +194,7 @@ class Game(State):
         self.asteroids = None
         self.shots = None
         self.asteroids_fake = None
+        self.boost = None
 
         AsteroidField.containers = None
         AsteroidFake.containers = None
@@ -186,5 +203,7 @@ class Game(State):
         ParticleEngine.containers = None
         Player.containers = None
         ParticleAnimation.containers = None
+        BoostShot.containers = None
+        BoostBomb.containers = None
 
         super().on_end()

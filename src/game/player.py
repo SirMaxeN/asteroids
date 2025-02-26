@@ -16,6 +16,8 @@ class Player(CircleShape):
         self.is_moving = False
         self.last_moving_direction = 0
         self.sound_timer = 0
+        self.shoot_boost_timer = 0
+        self.shoot_ultra_boost = 0
 
     def custom_polygon(self):
         points = [(-150, -146), (-46, -642), (-38, -649), (-38, -655), (-30, -655), (-29, -647), (-24, -647), (-22, -641), (-22, -459), (-10, -439), (-10, -366), (-4, -367), (-3, -393), (10, -393), (11, -367), (17, -366), (17, -439), (28, -459), (28, -640), (30, -647), (35, -647), (36, -654), (44, -654), (44, -648), (53, -641), (157, -133), (219, -15), (234, 162), (224, 197), (206, 205), (218, 350), (255, 365), (258, 440), (136, 533), (140, 605), (134, 604), (133, 598), (124, 587),
@@ -48,13 +50,14 @@ class Player(CircleShape):
         self.position += forward * PLAYER_SPEED * dt
         self.spawn_particles()
         if self.sound_timer > 0.2:
-            self.sound_timer=0
+            self.sound_timer = 0
             Audio.play_move(self.velocity.y*0.11)
 
     def update(self, dt: float):
         self.cool_down_time -= dt
+        self.shoot_boost_timer -= dt
         self.sound_timer += dt
-        
+
         keys = pygame.key.get_pressed()
 
         is_moving_direction = 0
@@ -91,6 +94,18 @@ class Player(CircleShape):
         shot = Shot(self.position.x, self.position.y)
         shot.velocity = pygame.Vector2(0, 1).rotate(
             self.rotation) * PLAYER_SHOOT_SPEED
+        if self.shoot_boost_timer > 0:
+            self.shoot_boost(10)
+            if self.shoot_ultra_boost > 0:
+                self.shoot_boost(20)
+
+    def shoot_boost(self, rotation):
+        shot = Shot(self.position.x, self.position.y)
+        shot.velocity = pygame.Vector2(0, 1).rotate(
+            self.rotation + rotation) * PLAYER_SHOOT_SPEED
+        shot = Shot(self.position.x, self.position.y)
+        shot.velocity = pygame.Vector2(0, 1).rotate(
+            self.rotation - rotation) * PLAYER_SHOOT_SPEED
 
     def spawn_particles(self):
         for i in range(1, 10):
@@ -105,11 +120,19 @@ class Player(CircleShape):
                                       self.position.y)
             particle.velocity = pygame.Vector2(0, self.velocity.y*-0.6).rotate(
                 self.rotation + index * 8) * PARTICLE_SPEED
-            
+
     def dead(self):
         self.kill()
         for i in range(1, 100):
-            ParticleAnimation(self.position.x, self.position.y, 2, (255, 255, 255), 0, random.uniform(0.4,1),
+            ParticleAnimation(self.position.x, self.position.y, 2, (255, 255, 255), 0, random.uniform(0.4, 1),
                               pygame.Vector2(0, 1).rotate(
                 self.rotation + i * 5.4) * (random.uniform(4, 40))
             )
+
+    def start_shoot_boost(self):
+        if self.shoot_boost_timer > 0:
+            self.shoot_ultra_boost = True
+        else:
+            self.shoot_ultra_boost = False
+
+        self.shoot_boost_timer = 10

@@ -1,10 +1,12 @@
 import pygame
 import random
 from ..utils.circleshape import CircleShape
-from ..utils.constants import ASTEROID_MIN_RADIUS, ASTEROID_SPLIT_VELOCITY_MULTIPLIER, SCORE_PER_ASTEROID, ASTEROID_TURN_SPEED
+from ..utils.constants import ASTEROID_MIN_RADIUS, ASTEROID_SPLIT_VELOCITY_MULTIPLIER, SCORE_PER_ASTEROID, ASTEROID_TURN_SPEED, BOOST_CHANCE, BOOST_TYPES
 from ..utils.resources import Resources
 from ..utils.audio import Audio
 from ..utils.particleanimation import ParticleAnimation
+from .boostbomb import BoostBomb
+from .boostshot import BoostShot
 
 
 class Asteroid(CircleShape):
@@ -37,7 +39,7 @@ class Asteroid(CircleShape):
 
         self.loop_around()
 
-    def split(self):
+    def split(self, boost: bool):
         Audio.play_explosion()
         self.split_animation()
         self.kill()
@@ -45,6 +47,8 @@ class Asteroid(CircleShape):
         Resources.SCORE += SCORE_PER_ASTEROID * self.type
 
         if self.radius == ASTEROID_MIN_RADIUS:
+            if boost:
+                self.spawn_boost()
             return
 
         new_rotation = random.uniform(20, 50)
@@ -80,7 +84,17 @@ class Asteroid(CircleShape):
 
     def split_animation(self):
         for i in range(1, 200):
-            ParticleAnimation(self.position.x, self.position.y, 2, (255, 255, 255), 0, random.uniform(0.8,1.5),
+            ParticleAnimation(self.position.x, self.position.y, 2, (255, 255, 255), 0, random.uniform(0.8, 1.5),
                               pygame.Vector2(0, 1).rotate(
                 self.rotation + i * 5.4) * (random.uniform(10, 80))
             )
+
+    def spawn_boost(self):
+        if random.random() <= BOOST_CHANCE/100:
+            boosts = BOOST_TYPES.copy()
+            random.shuffle(boosts)
+            type = boosts.pop()
+            if type == "bomb":
+                BoostBomb(self.position.x, self.position.y)
+            elif type == "shot":
+                BoostShot(self.position.x, self.position.y)

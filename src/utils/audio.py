@@ -11,6 +11,8 @@ class Audio:
     SOUND_PATH = ""
     MUSIC_PATH = ""
 
+    __CURRENT_CHANNEL = 0
+
     def __init__(self):
 
         Audio.SOUND_PATH = "assets/sound/"
@@ -18,6 +20,16 @@ class Audio:
 
         Audio.SOUND_VOLUME = 1
         Audio.MUSIC_VOLUME = 1
+
+        Audio.__CURRENT_CHANNEL = 0
+
+        pygame.mixer.set_num_channels(50)
+
+    def __get_channel():
+        Audio.__CURRENT_CHANNEL += 1
+        if Audio.__CURRENT_CHANNEL > 49:
+            Audio.__CURRENT_CHANNEL = 1
+        return pygame.mixer.Channel(Audio.__CURRENT_CHANNEL)
 
     def sound_mute_change():
         if Audio.SOUND_VOLUME > 0:
@@ -34,36 +46,71 @@ class Audio:
             Audio.CURRENT_MUSIC_VOLUME * Audio.MUSIC_VOLUME)
 
     def play_move(volume):
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}move2.wav").play().set_volume(abs(volume) * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}move2.wav")
+        sound.set_volume(abs(volume) * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def play_explosion():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}explosion_{random.randint(0, 3)}.wav").play().set_volume(0.2 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}explosion_{random.randint(0, 3)}.wav")
+        sound.set_volume(0.2 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def play_end():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}end.wav").play().set_volume(0.4 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}end.wav")
+        sound.set_volume(0.4 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def play_dead():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}dead.wav").play().set_volume(0.2 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}dead.wav")
+        sound.set_volume(0.2 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def play_dead_symth():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}dead_symth.wav").play().set_volume(0.2 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}dead_symth.wav")
+        sound.set_volume(0.2 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
+
+    def play_boost():
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}boost.wav")
+        sound.set_volume(0.4 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
+
+    def play_boost_shot():
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}boost_shot.wav")
+        sound.set_volume(0.4 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
+
+    def play_boost_bomb():
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}boost_bomb.wav")
+        sound.set_volume(0.4 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def play_shoot():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}shoot_{random.randint(0, 3)}.wav").play().set_volume(0.2 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}shoot_{random.randint(0, 3)}.wav")
+        sound.set_volume(0.2 * Audio.SOUND_VOLUME)
+
+        Audio.__get_channel().play(sound)
 
     def play_click():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}click.wav").play().set_volume(0.2 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}click.wav")
+        sound.set_volume(0.2 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def play_enter():
-        pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}blip.wav").play().set_volume(0.2 * Audio.SOUND_VOLUME)
+        sound = pygame.mixer.Sound(
+            f"{Audio.SOUND_PATH}blip.wav")
+        sound.set_volume(0.2 * Audio.SOUND_VOLUME)
+        Audio.__get_channel().play(sound)
 
     def load_game_music():
         pygame.mixer.music.load(f"{Audio.MUSIC_PATH}game.ogg")
