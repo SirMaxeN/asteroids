@@ -5,11 +5,18 @@ Boot.dev course - [Build Asteroids using Python and Pygame](https://www.boot.dev
 ## Description
 Simple python game based on classic Asteroids using pygame
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vBE8EtUh9WU?si=mx9tvZ3ecr4Ht-Zi&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Usage
 python3 main.py
 
 
+
 ## Changelog
+### [1.0.8] - 2025-02-26
+* readme video
+* change booster chances
+
 ### [1.0.7] - 2025-02-26
 * bomb booster
 * shoot booster

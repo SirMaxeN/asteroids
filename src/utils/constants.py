@@ -28,5 +28,5 @@ PARTICLE_SPEED = 500
 
 PLANET_SPEED = 80
 
-BOOST_CHANCE = 20  # procent
-BOOST_TYPES = ["shot", "shot", "bomb"]
+BOOST_CHANCE = 10  # procent
+BOOST_TYPES = ["shot", "bomb"]
