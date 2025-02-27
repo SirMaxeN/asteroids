@@ -78,6 +78,8 @@ download zip build from [HERE](https://drive.google.com/file/d/1s9MQZ6JO9la3w2Mp
 ### [1.0.0] - 2025-02-25
 #### End of course
 Boot.dev course - [Build Asteroids using Python and Pygame](https://www.boot.dev/courses/build-asteroids-python) on Boot.dev.
+## Video verison after course
+[![VIDEO THUMBNAIL](https://i.imgur.com/UpB0PIq.png)](https://youtu.be/iR34R2s0oC0 "Asteroids - pygame")
 
 * basic asteroid game
 * circle shapes
