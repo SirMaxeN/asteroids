@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import pygame.freetype
 from src.utils.constants import *
@@ -7,14 +8,14 @@ from src.utils.statemanager import StateManager
 from src.utils.stateenum import StateEnum
 
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 
 
 def version():
     print(f"Asteroid game ver {VERSION}")
 
 
-def main():
+async def main():
     version()
     pygame.init()
     pygame.mixer.init()
@@ -54,7 +55,8 @@ def main():
         pygame.display.flip()
 
         dt = clock.tick(60)/1000
+    await asyncio.sleep(0)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
