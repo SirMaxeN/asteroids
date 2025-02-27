@@ -14,13 +14,12 @@ python3 main.py
 ```
 or<br>
 ```
-go to build/asteroidsInstaller.exe
-this is windows executable installer which will unzip .exe and assets to use on windows
+go to build/ folder and unzip build files
 ```
 
 <br>or<br>
 
-download installer from [HERE](https://drive.google.com/file/d/1PIQMpD5TozV31Nb-lJ2EBhIdXP3CEKw7/view?usp=drive_link)
+download zip build from [HERE](https://drive.google.com/file/d/1s9MQZ6JO9la3w2MpzVKMa8xELOu0Nchq/view?usp=drive_link)
 
 ## Changelog
 ### [1.1.1] - 2025-02-27
