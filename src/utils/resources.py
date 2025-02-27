@@ -28,10 +28,8 @@ class Resources:
 
     def credits(color: int):
         return [
-            Text("base game made during boot.dev python course",
-                 SCREEN_WIDTH/2 + 383, SCREEN_HEIGHT / 2 + 290, (color, color, color), Resources.FONT_S),
-            Text("rest made by Jakub \"SirMaxeN\" Komar",
-                 SCREEN_WIDTH/2 + 433, SCREEN_HEIGHT / 2 + 310, (color, color, color), Resources.FONT_S),
+            Text("made by Jakub \"SirMaxeN\" Komar",
+                 SCREEN_WIDTH/2 + 460, SCREEN_HEIGHT / 2 + 310, (color, color, color), Resources.FONT_S),
             Text("https://github.com/SirMaxeN/asteroids",
                  SCREEN_WIDTH/2 + 420, SCREEN_HEIGHT / 2 + 330, (color, color, color), Resources.FONT_S),
         ]

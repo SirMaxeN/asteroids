@@ -1,12 +1,10 @@
-# asteroids
-
-Boot.dev course - [Build Asteroids using Python and Pygame](https://www.boot.dev/courses/build-asteroids-python) on Boot.dev.
+# Asteroids
 
 ## Description
 Simple python game based on classic Asteroids using pygame
 
 ## Video
-[![VIDEO THUMBNAIL](https://i.imgur.com/DoTgJAm.png)](https://youtu.be/vBE8EtUh9WU?si=Byzi-eqDaHCk18fY "Asteroids - pygame")
+[![VIDEO THUMBNAIL](https://i.imgur.com/8W86Bk5.png)](https://youtu.be/8bqs0WMiIw8 "Asteroids - pygame")
 
 ## Usage
 ```cmd
@@ -79,6 +77,8 @@ download zip build from [HERE](https://drive.google.com/file/d/1s9MQZ6JO9la3w2Mp
 
 ### [1.0.0] - 2025-02-25
 #### End of course
+Boot.dev course - [Build Asteroids using Python and Pygame](https://www.boot.dev/courses/build-asteroids-python) on Boot.dev.
+
 * basic asteroid game
 * circle shapes
 * shoot and split asteroid

@@ -14,7 +14,7 @@ class Animation(Shape):
         super().__init__(x, y, 0)
         self.color = color
         if Animation.current_type == None:
-            Animation.current_type = random.randint(0, 1)
+            Animation.current_type = 0
         if Animation.current_rotation == None:
             Animation.current_rotation = random.randint(0, 6) * 10
         if Animation.current_position == None:
