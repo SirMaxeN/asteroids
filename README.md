@@ -20,6 +20,9 @@ go to build/ folder and unzip build files
 download zip build from [HERE](https://drive.google.com/file/d/1s9MQZ6JO9la3w2MpzVKMa8xELOu0Nchq/view?usp=drive_link)
 
 ## Changelog
+### [1.1.2] - 2025-03-04
+* main.py refactor
+
 ### [1.1.1] - 2025-02-27
 * fix exe installer
 * fix readme.md
