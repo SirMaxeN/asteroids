@@ -20,7 +20,7 @@ go to build/ folder and unzip windows or mac/linux/ubuntu version
 
 For windows just run .exe (bare in mind that windows will probably detect it as unsafe file)
 
-For mac/linux/ubuntu run ./build/asteroids (may occure permissions problems use chmod -R u=rwx,g=,o=,a= directory- changes permissions (r-read, w-write, x-execute) for user, where u - user/owner, g - group, o - other, a - all)
+For mac/linux/ubuntu run ./build/asteroids (may occur permissions problems use chmod -R u=rwx,g=,o=,a= directory- changes permissions (r-read, w-write, x-execute) for user, where u - user/owner, g - group, o - other, a - all)
 ```
 
 <br>or<br>
