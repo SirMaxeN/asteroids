@@ -29,7 +29,9 @@ class Resources:
     def credits(color: int):
         return [
             Text("made by Jakub \"SirMaxeN\" Komar",
-                 SCREEN_WIDTH/2 + 460, SCREEN_HEIGHT / 2 + 310, (color, color, color), Resources.FONT_S),
+                 SCREEN_WIDTH/2 + 460, SCREEN_HEIGHT / 2 + 290, (color, color, color), Resources.FONT_S),
+            Text("using pygame 2.6.1, web version pygbag 0.9.2",
+                 SCREEN_WIDTH/2 + 380, SCREEN_HEIGHT / 2 + 310, (color, color, color), Resources.FONT_S),
             Text("https://github.com/SirMaxeN/asteroids",
                  SCREEN_WIDTH/2 + 420, SCREEN_HEIGHT / 2 + 330, (color, color, color), Resources.FONT_S),
         ]

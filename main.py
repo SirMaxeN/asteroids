@@ -1,14 +1,14 @@
+import asyncio
 from src.gameloop import GameLoop
 
 
-VERSION = "1.1.2"
+VERSION = "1.2.0"
 
 
-def main():
+async def main():
     print(f"Asteroid game ver {VERSION}")
-    GameLoop().start(VERSION)
-    
+    await GameLoop().start(VERSION)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

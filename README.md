@@ -10,16 +10,31 @@ Simple python game based on classic Asteroids using pygame
 ```cmd
 python3 main.py
 ```
-or<br>
+or<br><br>
+[PLAY WEB VERSION HERE](https://kstrzebicka.pl/games/asteroids/)
+<br><br>
+or
+<br>
 ```
-go to build/ folder and unzip build files
+go to build/ folder and unzip windows or mac/linux/ubuntu version
+
+For windows just run .exe (bare in mind that windows will probably detect it as unsafe file)
+
+For mac/linux/ubuntu run ./build/asteroids (may occure permissions problems use chmod -R u=rwx,g=,o=,a= directory- changes permissions (r-read, w-write, x-execute) for user, where u - user/owner, g - group, o - other, a - all)
 ```
 
 <br>or<br>
 
-download zip build from [HERE](https://drive.google.com/file/d/1s9MQZ6JO9la3w2MpzVKMa8xELOu0Nchq/view?usp=drive_link)
+download zip build from google drive:
+<br>
+[WINDOWS](https://drive.google.com/file/d/1rJIsK0yaqloCIZEY_RfAdxB0SDXXrs75/view?usp=drive_link)
+<br>
+[MAC/LINUX/UBUNTU](https://drive.google.com/file/d/1QPEgHJmWxSXG57vBPMrdKMRkiVLZ7JW_/view?usp=drive_link)
 
 ## Changelog
+### [1.2.0] - 2025-03-04
+* add web build
+
 ### [1.1.2] - 2025-03-04
 * main.py refactor
 

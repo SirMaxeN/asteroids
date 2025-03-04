@@ -47,68 +47,68 @@ class Audio:
 
     def play_move(volume):
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}move2.wav")
+            f"{Audio.SOUND_PATH}move2.ogg")
         sound.set_volume(abs(volume) * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_explosion():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}explosion_{random.randint(0, 3)}.wav")
+            f"{Audio.SOUND_PATH}explosion_{random.randint(0, 3)}.ogg")
         sound.set_volume(0.2 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_end():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}end.wav")
+            f"{Audio.SOUND_PATH}end.ogg")
         sound.set_volume(0.4 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_dead():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}dead.wav")
+            f"{Audio.SOUND_PATH}dead.ogg")
         sound.set_volume(0.2 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_dead_symth():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}dead_symth.wav")
+            f"{Audio.SOUND_PATH}dead_symth.ogg")
         sound.set_volume(0.2 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_boost():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}boost.wav")
+            f"{Audio.SOUND_PATH}boost.ogg")
         sound.set_volume(0.4 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_boost_shot():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}boost_shot.wav")
+            f"{Audio.SOUND_PATH}boost_shot.ogg")
         sound.set_volume(0.4 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_boost_bomb():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}boost_bomb.wav")
+            f"{Audio.SOUND_PATH}boost_bomb.ogg")
         sound.set_volume(0.4 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_shoot():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}shoot_{random.randint(0, 3)}.wav")
+            f"{Audio.SOUND_PATH}shoot_{random.randint(0, 3)}.ogg")
         sound.set_volume(0.2 * Audio.SOUND_VOLUME)
 
         Audio.__get_channel().play(sound)
 
     def play_click():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}click.wav")
+            f"{Audio.SOUND_PATH}click.ogg")
         sound.set_volume(0.2 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 
     def play_enter():
         sound = pygame.mixer.Sound(
-            f"{Audio.SOUND_PATH}blip.wav")
+            f"{Audio.SOUND_PATH}blip.ogg")
         sound.set_volume(0.2 * Audio.SOUND_VOLUME)
         Audio.__get_channel().play(sound)
 

@@ -1,3 +1,6 @@
+import asyncio
+import sys
+import platform
 import pygame
 import pygame.freetype
 from src.utils.constants import *
@@ -8,7 +11,7 @@ from src.utils.stateenum import StateEnum
 
 
 class GameLoop:
-    def start(self, version: str):
+    async def start(self, version: str):
         pygame.init()
         pygame.mixer.init()
         resources = Resources(version)
@@ -25,11 +28,14 @@ class GameLoop:
 
         while True:
             keys = pygame.key.get_pressed()
-
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
-                    return
+                    if sys.platform == "emscripten":
+                        platform.window.location.reload()
+                        return
+                    else:
+                        return
 
             screen.fill((0, 0, 0))
 
@@ -41,9 +47,15 @@ class GameLoop:
                     if state != StateEnum.CONTINUE:
                         current_state.on_end()
                         if state == StateEnum.EXIT:
-                            return
+                            if sys.platform == "emscripten":
+                                platform.window.location.reload()
+                                return
+                            else:
+                                return
                         current_state = state_manager.change_state(state)
 
             pygame.display.flip()
 
             dt = clock.tick(60)/1000
+
+            await asyncio.sleep(0)
