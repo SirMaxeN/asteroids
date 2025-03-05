@@ -11,7 +11,7 @@ Simple python game based on classic Asteroids using pygame
 python3 main.py
 ```
 or<br><br>
-[PLAY WEB VERSION HERE - PC ONLY](https://kstrzebicka.pl/games/asteroids/)
+[PLAY WEB VERSION HERE](https://sirmaxen.itch.io/asteroidsbyjakubkomar)
 <br><br>
 or
 <br>
