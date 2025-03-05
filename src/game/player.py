@@ -12,12 +12,16 @@ class Player(CircleShape):
     def __init__(self, x: float, y: float):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.set_rotation = 0
+
         self.cool_down_time = 0
         self.is_moving = False
         self.last_moving_direction = 0
         self.sound_timer = 0
         self.shoot_boost_timer = 0
         self.shoot_ultra_boost = 0
+        self.joystick_up = False
+        self.joystick_down = False
 
     def custom_polygon(self):
         points = [(-150, -146), (-46, -642), (-38, -649), (-38, -655), (-30, -655), (-29, -647), (-24, -647), (-22, -641), (-22, -459), (-10, -439), (-10, -366), (-4, -367), (-3, -393), (10, -393), (11, -367), (17, -366), (17, -439), (28, -459), (28, -640), (30, -647), (35, -647), (36, -654), (44, -654), (44, -648), (53, -641), (157, -133), (219, -15), (234, 162), (224, 197), (206, 205), (218, 350), (255, 365), (258, 440), (136, 533), (140, 605), (134, 604), (133, 598), (124, 587),
@@ -43,7 +47,26 @@ class Player(CircleShape):
         pygame.draw.polygon(screen, (255, 255, 255), self.custom_polygon(), 2)
 
     def rotate(self, dt: float):
-        self.rotation += PLAYER_TURN_SPEED * dt
+        self.set_rotation += PLAYER_TURN_SPEED * dt
+
+    def rotate_to_angle(self, dt: float):
+        # if self.rotation < self.set_rotation:
+        #     self.rotation = min(self.rotation + PLAYER_TURN_SPEED * dt,
+        #                         self.set_rotation)
+        # else:
+        #     self.rotation = max(self.rotation - PLAYER_TURN_SPEED * dt,
+        #                         self.set_rotation)
+
+        self.rotation %= 360
+        self.set_rotation %= 360
+
+        diff = (self.set_rotation - self.rotation) % 360
+        if diff > 180:
+            diff -= 360  # Take the shorter path
+
+        step = min(abs(diff),  PLAYER_TURN_SPEED * dt) * \
+            (1 if diff > 0 else -1)
+        self.rotation = (self.rotation + step) % 360
 
     def move(self, dt: float):
         forward = pygame.Vector2(0, self.velocity.y).rotate(self.rotation)
@@ -65,12 +88,14 @@ class Player(CircleShape):
             self.rotate(-dt)
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.rotate(dt)
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        if keys[pygame.K_s] or keys[pygame.K_DOWN] or self.joystick_down:
             is_moving_direction = -1
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
+        if keys[pygame.K_w] or keys[pygame.K_UP] or (self.joystick_up and not (self.joystick_down)):
             is_moving_direction = 1
-        if (keys[pygame.K_SPACE] or keys[pygame.K_m]) and self.cool_down_time <= 0:
+        if (keys[pygame.K_SPACE] or keys[pygame.K_m]):
             self.shoot()
+
+        self.rotate_to_angle(dt)
 
         if is_moving_direction != 0:
             if is_moving_direction != self.last_moving_direction:
@@ -89,15 +114,16 @@ class Player(CircleShape):
 
         self.loop_around()
 
-    def shoot(self):
-        self.cool_down_time = PLAYER_SHOOT_COOLDOWN
-        shot = Shot(self.position.x, self.position.y)
-        shot.velocity = pygame.Vector2(0, 1).rotate(
-            self.rotation) * PLAYER_SHOOT_SPEED
-        if self.shoot_boost_timer > 0:
-            self.shoot_boost(10)
-            if self.shoot_ultra_boost > 0:
-                self.shoot_boost(20)
+    def shoot(self) -> None:
+        if self.cool_down_time <= 0:
+            self.cool_down_time = PLAYER_SHOOT_COOLDOWN
+            shot = Shot(self.position.x, self.position.y)
+            shot.velocity = pygame.Vector2(0, 1).rotate(
+                self.rotation) * PLAYER_SHOOT_SPEED
+            if self.shoot_boost_timer > 0:
+                self.shoot_boost(10)
+                if self.shoot_ultra_boost > 0:
+                    self.shoot_boost(20)
 
     def shoot_boost(self, rotation):
         shot = Shot(self.position.x, self.position.y)

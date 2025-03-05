@@ -18,6 +18,13 @@ class Shape(pygame.sprite.Sprite):
         self.velocity: pygame.Vector2 = pygame.Vector2(0, 0)
         self.radius: float = radius
 
+    def custom_polygon(self, points, scale, rotation, offset):
+        output = []
+        for i in range(0, len(points), 2):
+            output.append(
+                self.position - pygame.Vector2(points[i] + offset[0], points[i+1] + offset[1]).rotate(rotation).rotate(self.rotation) * (self.radius * scale))
+        return output
+
     def draw(self, screen: pygame.display):
         # sub-classes must override
         pass
@@ -30,7 +37,11 @@ class Shape(pygame.sprite.Sprite):
         distance = self.position.distance_to(shape.position)
         return distance <= self.radius + shape.radius
 
-    def out_of_bounds(self):
+    def in_hitbox(self, x, y) -> bool:
+        distance = self.position.distance_to(pygame.Vector2(x, y))
+        return distance <= self.radius
+
+    def out_of_bounds(self) -> bool:
         return (
             self.position.y < -self.radius - Shape.offset or
             self.position.y > SCREEN_HEIGHT + self.radius + Shape.offset or

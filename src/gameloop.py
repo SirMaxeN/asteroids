@@ -31,7 +31,7 @@ class GameLoop:
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
-                    if sys.platform == "emscripten":
+                    if Resources.IS_WEB:
                         platform.window.location.reload()
                         return
                     else:
@@ -47,7 +47,7 @@ class GameLoop:
                     if state != StateEnum.CONTINUE:
                         current_state.on_end()
                         if state == StateEnum.EXIT:
-                            if sys.platform == "emscripten":
+                            if Resources.IS_WEB:
                                 platform.window.location.reload()
                                 return
                             else:

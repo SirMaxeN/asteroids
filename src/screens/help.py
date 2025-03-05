@@ -18,18 +18,6 @@ class Help(State):
                  SCREEN_HEIGHT/2 - 260, (255, 255, 255), Resources.FONT_XL),
             Text("DURING GAME:",                 SCREEN_WIDTH/2 - 300,
                  SCREEN_HEIGHT/2 - 140, (255, 255, 255), Resources.FONT_M),
-            Text("W or ARROW UP  -  move forward",                 SCREEN_WIDTH /
-                 2 - 300, SCREEN_HEIGHT/2 - 90, (255, 255, 255), Resources.FONT_S),
-            Text("S or ARROW DOWN  -  move backward",                 SCREEN_WIDTH /
-                 2 - 300, SCREEN_HEIGHT/2 - 60, (255, 255, 255), Resources.FONT_S),
-            Text("A or ARROW LEFT  -  rotate left",                 SCREEN_WIDTH /
-                 2 - 300, SCREEN_HEIGHT/2 - 30, (255, 255, 255), Resources.FONT_S),
-            Text("D or ARROW RIGHT  -  rotate right",                 SCREEN_WIDTH /
-                 2 - 300, SCREEN_HEIGHT/2, (255, 255, 255), Resources.FONT_S),
-            Text("M or SPACE  -  shoot",                 SCREEN_WIDTH/2 - 300,
-                 SCREEN_HEIGHT/2 + 30, (255, 255, 255), Resources.FONT_S),
-            Text("ESC  -  back to menu",                 SCREEN_WIDTH/2 - 300,
-                 SCREEN_HEIGHT/2 + 60, (255, 255, 255), Resources.FONT_S),
             Text("HOW TO PLAY:",                 SCREEN_WIDTH/2 + 300,
                  SCREEN_HEIGHT/2 - 140, (255, 255, 255), Resources.FONT_M),
             Text("Move ship around the space",                 SCREEN_WIDTH/2 +
@@ -44,9 +32,37 @@ class Help(State):
                  SCREEN_HEIGHT / 2 + 30, (255, 255, 255), Resources.FONT_S),
             Text("Space is looped around",                 SCREEN_WIDTH/2 + 300,
                  SCREEN_HEIGHT / 2 + 60, (255, 255, 255), Resources.FONT_S),
-            Text("press any key to go back to menu",                 SCREEN_WIDTH /
-                 2, SCREEN_HEIGHT/2 + 150, (255, 255, 255), Resources.FONT_L),
+
         ]
+        if Resources.IS_MOBILE:
+            self.texts.append(Text("tap anywhere to go back to menu",                 SCREEN_WIDTH /
+                                   2, SCREEN_HEIGHT/2 + 150, (255, 255, 255), Resources.FONT_L))
+            self.texts.append(Text("USE JOYSTICK ON RIGHT  -  rotate",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 - 90, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("TOGGLE SHOOT BUTTON ON LEFT  -  shoot",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 - 60, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("TAP/HOLD FORWARD BUTTON -  move forward",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 - 30, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("TAP/HOLD REVERSE BUTTON  -  move backwards",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("TAP EXIT BUTTON IN TOP RIGHT  -  back to menu",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 + 30, (255, 255, 255), Resources.FONT_S))
+
+        else:
+            self.texts.append(Text("press any key to go back to menu",                 SCREEN_WIDTH /
+                                   2, SCREEN_HEIGHT/2 + 150, (255, 255, 255), Resources.FONT_L))
+            self.texts.append(Text("W or ARROW UP  -  move forward",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 - 90, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("S or ARROW DOWN  -  move backward",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 - 60, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("A or ARROW LEFT  -  rotate left",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2 - 30, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("D or ARROW RIGHT  -  rotate right",                 SCREEN_WIDTH /
+                                   2 - 300, SCREEN_HEIGHT/2, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("M or SPACE  -  shoot",                 SCREEN_WIDTH/2 - 300,
+                                   SCREEN_HEIGHT/2 + 30, (255, 255, 255), Resources.FONT_S))
+            self.texts.append(Text("ESC  -  back to menu",                 SCREEN_WIDTH/2 - 300,
+                                   SCREEN_HEIGHT/2 + 60, (255, 255, 255), Resources.FONT_S))
 
         for i in Resources.credits(150):
             self.texts.append(i)
@@ -67,6 +83,9 @@ class Help(State):
 
         for event in events:
             if event.type == pygame.KEYDOWN:
+                Audio.play_enter()
+                return StateEnum.MENU
+            if event.type == pygame.FINGERDOWN or event.type == pygame.MOUSEBUTTONDOWN:
                 Audio.play_enter()
                 return StateEnum.MENU
 

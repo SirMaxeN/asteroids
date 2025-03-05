@@ -1,4 +1,6 @@
 import pygame
+import sys
+import platform
 from .constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from .text import Text
 
@@ -11,9 +13,19 @@ class Resources:
     FONT_S: pygame.font.Font
 
     VERSION: str
+    IS_WEB: bool
+    IS_MOBILE: bool
     SCORE: int
 
     def __init__(self, version: str):
+
+        if sys.platform == "emscripten":
+            Resources.IS_WEB = True
+            Resources.IS_MOBILE = platform.window.navigator.userAgentData.mobile
+
+        else:
+            Resources.IS_WEB = False
+            Resources.IS_MOBILE = False
 
         Resources.FONT_XL = pygame.font.Font(
             "assets/font/DroidSansMono.ttf", 40)
@@ -28,12 +40,12 @@ class Resources:
 
     def credits(color: int):
         return [
-            Text("made by Jakub \"SirMaxeN\" Komar",
-                 SCREEN_WIDTH/2 + 460, SCREEN_HEIGHT / 2 + 290, (color, color, color), Resources.FONT_S),
-            Text("using pygame 2.6.1, web version pygbag 0.9.2",
-                 SCREEN_WIDTH/2 + 380, SCREEN_HEIGHT / 2 + 310, (color, color, color), Resources.FONT_S),
-            Text("https://github.com/SirMaxeN/asteroids",
-                 SCREEN_WIDTH/2 + 420, SCREEN_HEIGHT / 2 + 330, (color, color, color), Resources.FONT_S),
+            Text("made by Jakub \"SirMaxeN\" Komar", SCREEN_WIDTH/2 + 460,
+                 SCREEN_HEIGHT / 2 + 290, (color, color, color), Resources.FONT_S),
+            Text("using pygame 2.6.1, web version pygbag 0.9.2", SCREEN_WIDTH/2 +
+                 380, SCREEN_HEIGHT / 2 + 310, (color, color, color), Resources.FONT_S),
+            Text("https://github.com/SirMaxeN/asteroids", SCREEN_WIDTH/2 + 420,
+                 SCREEN_HEIGHT / 2 + 330, (color, color, color), Resources.FONT_S),
         ]
 
     def version(color: int):
@@ -59,19 +71,20 @@ class Resources:
                  SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos-offet*4), (color, color, color), Resources.FONT_S),
             Text("        /_/    \\_\\_____/   |_|  |______|_|  \\_\\\\____/_____|_____/_____/          ",
                  SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos-offet*5), (color, color, color), Resources.FONT_S),
-            Text("  ____               __      __         __      __  __                          ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*6), (color, color, color), Resources.FONT_S),
-            Text(" |  _ \\             | |     | |        | |     | |/ /                          ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*7), (color, color, color), Resources.FONT_S),
-            Text(" | |_) |_   _       | | __ _| | ___   _| |__   | ' / ___  _ __ ___   __ _ _ __ ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*8), (color, color, color), Resources.FONT_S),
-            Text(" |  _ <| | | |  _   | |/ _` | |/ / | | | '_ \\  |  < / _ \\| '_ ` _ \\ / _` | '__|",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*9), (color, color, color), Resources.FONT_S),
-            Text(" | |_) | |_| | | |__| | (_| |   <| |_| | |_) | | . \\ (_) | | | | | | (_| | |   ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*10), (color, color, color), Resources.FONT_S),
-            Text(" |____/ \\__, |  \\____/ \\__,_|_|\\_\\\\__,_|_.__/  |_|\\_\\___/|_| |_| |_|\\__,_|_|   ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*11), (color, color, color), Resources.FONT_S),
-            Text("         __/ |                                                                 ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*12), (color, color, color), Resources.FONT_S),
-            Text("        |___/                                                                  ",
-                 SCREEN_WIDTH/2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*13), (color, color, color), Resources.FONT_S)]
+            Text("  ____               __      __         __      __  __                          ", SCREEN_WIDTH /
+                 2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*6), (color, color, color), Resources.FONT_S),
+            Text(" |  _ \\             | |     | |        | |     | |/ /                          ", SCREEN_WIDTH /
+                 2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*7), (color, color, color), Resources.FONT_S),
+            Text(" | |_) |_   _       | | __ _| | ___   _| |__   | ' / ___  _ __ ___   __ _ _ __ ", SCREEN_WIDTH/2,
+                 SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*8), (color, color, color), Resources.FONT_S),
+            Text(" |  _ <| | | |  _   | |/ _` | |/ / | | | '_ \\  |  < / _ \\| '_ ` _ \\ / _` | '__|", SCREEN_WIDTH /
+                 2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*9), (color, color, color), Resources.FONT_S),
+            Text(" | |_) | |_| | | |__| | (_| |   <| |_| | |_) | | . \\ (_) | | | | | | (_| | |   ", SCREEN_WIDTH/2,
+                 SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*10), (color, color, color), Resources.FONT_S),
+            Text(" |____/ \\__, |  \\____/ \\__,_|_|\\_\\\\__,_|_.__/  |_|\\_\\___/|_| |_| |_|\\__,_|_|   ", SCREEN_WIDTH /
+                 2, SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*11), (color, color, color), Resources.FONT_S),
+            Text("         __/ |                                                                 ", SCREEN_WIDTH/2,
+                 SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*12), (color, color, color), Resources.FONT_S),
+            Text("        |___/                                                                  ", SCREEN_WIDTH/2,
+                 SCREEN_HEIGHT / 2 - (pos - additionalOffset - offet*13), (color, color, color), Resources.FONT_S)
+        ]
