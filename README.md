@@ -95,7 +95,8 @@ download zip build from google drive:
 
 ### [1.0.0] - 2025-02-25
 #### End of course
-Boot.dev course - [Build Asteroids using Python and Pygame](https://www.boot.dev/courses/build-asteroids-python) on Boot.dev.
+Boot.dev guided project - [Build Asteroids using Python and Pygame](https://www.boot.dev/courses/build-asteroids-python) on Boot.dev.
+Guided Projects is a project where whole projects are separated into small tasks, and for each task, you are provided with tips if you get stuck.
 ## Video verison after course
 [![VIDEO THUMBNAIL](https://i.imgur.com/UpB0PIq.png)](https://youtu.be/iR34R2s0oC0 "Asteroids - pygame")
 
